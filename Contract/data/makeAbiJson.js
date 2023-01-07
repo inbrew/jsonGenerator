@@ -3,10 +3,14 @@ const path = require("path");
 
 const basePath = __dirname;
 
-let base = path.join(basePath, "../build/contracts");
+let base = path.join(basePath, "../");
 
 // json maker
 const makeAbi = async (location, destination, address) => {
+  console.log("location : ", location);
+  console.log("destination : ", destination);
+  console.log("path location : ", path.join(base, location));
+  console.log("path destination : ", path.join(base, destination));
   const json = await fs.readFileSync(path.join(base, location), {
     encoding: "utf-8",
   });
@@ -25,4 +29,5 @@ const makeData = (json, address) => {
 
 module.exports = {
   makeAbi,
+  makeData,
 };
