@@ -6,6 +6,9 @@ const { address } = require("../env-config");
 const jsonUrl =
   "https://gateway.pinata.cloud/ipfs/QmRGeNseaeeEoRBGWwRotapBPyKfZ9CrrHTvTEToNM8vn5";
 
+// makeAbi
+const { makeAbi } = require("../data/makeAbiJson");
+
 module.exports = async function (deployer) {
   await deployer.deploy(inNFT);
   const inNFTContract = await inNFT.deployed();
