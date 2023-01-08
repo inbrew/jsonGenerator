@@ -1,8 +1,10 @@
 {
-  "name": "H and I #1",
+  "name": "H and I #2",
   "description": "Video Tape - H and I",
-  "image": "https://in-nft.s3.ap-northeast-2.amazonaws.com/In_kid.png",
-  "youtube_url": "https://youtu.be/fsGx3_Ot3zw",
+  "animation_url": {
+    "type": "audio",
+    "value": "https://in-nft.s3.ap-northeast-2.amazonaws.com/HeesuAndInsuAndMom.mp3"
+  },
   "attributes": {
     "type": "object",
     "description": "a IN NFT json"
