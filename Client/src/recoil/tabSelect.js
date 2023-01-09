@@ -6,7 +6,7 @@ const { persistAtom } = recoilPersist();
 export const tabSelectState = atom({
     key: "tabSelect",
     default: {
-        tabSelect: "DASHBOARD",
+        tabSelect: "Main",
     },
     effects_UNSTABLE: [persistAtom],
 });

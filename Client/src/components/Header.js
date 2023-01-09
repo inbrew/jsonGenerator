@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 // MUI css
 import { Box, Typography } from "@mui/material";
@@ -8,14 +7,10 @@ import { Box, Typography } from "@mui/material";
 import headerMMG from "../img/Header_MMG.png";
 
 export default function Header() {
-    const navigate = useNavigate();
-    const handleClick = () => {
-        navigate('/');
-    }
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', m: "1%" }}>
-            <Box onClick={() => handleClick()} sx={{ display: 'flex', cursor: "pointer" }}>
+            <Box sx={{ display: 'flex' }}>
                 <img
                     src={headerMMG}
                     width="auto"

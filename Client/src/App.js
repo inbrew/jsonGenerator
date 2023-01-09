@@ -4,6 +4,8 @@ import './App.css';
 
 // pages
 import Main from "./pages/Main";
+import NFT from "./pages/NFT";
+import JSON from "./pages/JSON";
 
 // components
 import TabSelector from "./components/TabSelector";
@@ -24,6 +26,8 @@ function App() {
       <TabSelector />
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/Json" element={<JSON />} />
+        <Route path="/NFT" element={<NFT />} />
       </Routes>
     </BrowserRouter>
   );

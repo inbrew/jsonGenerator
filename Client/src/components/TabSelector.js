@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // recoil
@@ -10,12 +10,17 @@ import { Box, Tabs, Tab } from "@mui/material";
 
 export default function TabSelector() {
     const [tabValueState, setTabValue] = useRecoilState(tabSelectState);
+    const navigate = useNavigate();
 
     const handleTab = (event, newValue) => {
         setTabValue({ tabSelect: newValue });
         console.log(newValue);
 
-        // 네비게이션 생성해야함.
+        if (newValue === 'Main') {
+            navigate('/');
+        } else {
+            navigate(`/${newValue}`);
+        }
     }
 
     return (
@@ -27,9 +32,9 @@ export default function TabSelector() {
                 indicatorColor="secondary"
                 aria-label="secondary tabs example"
             >
-                <Tab label="Dashboard" value="DASHBOARD" />
-                <Tab label="NFT" value="NFT" />
+                <Tab label="Main" value="Main" />
                 <Tab label="Json" value="Json" />
+                <Tab label="NFT" value="NFT" />
             </Tabs>
         </Box>
     );
