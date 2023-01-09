@@ -1,6 +1,6 @@
-const InNFTCA = require("../data/abi/InNFT.json").address;
+const InNFTCA = require("./abi/InNFT.json").address;
 
-const InNFTABI = require("../data/abi/InNFT.json").abi;
+const InNFTABI = require("./abi/InNFT.json").abi;
 
 module.exports = {
   InNFTCA,

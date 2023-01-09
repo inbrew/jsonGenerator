@@ -17,8 +17,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // route
-const wallet = require("./routes/wallet");
-app.use("/wallet", wallet);
+const aws = require("./routes/aws");
+app.use("/aws", aws);
 
 app.get("/", (req, res) => {
     res.send("This is Json Generator server!");

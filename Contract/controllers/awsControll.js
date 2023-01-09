@@ -25,10 +25,11 @@ s3.putObject(params, (err, data) => {
 
 
 
-// module.exports = {
-//     getS3BucketsList: async (req, res) => {
+module.exports = {
+    getS3BucketsList: async (req, res) => {
+
+        res.send("ok!");
 
 
-
-//     }
-// }
+    }
+}
