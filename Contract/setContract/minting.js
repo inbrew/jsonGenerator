@@ -1,13 +1,13 @@
+const path = require("path");
+require('dotenv').config({path: path.resolve(__dirname, "../.env")});
+
 // EOA data
-const polygonTestNetRpcURL =
-  "https://polygon-mumbai.infura.io/v3/fa408e18052a47b18c82a59f8b54c1c6";
+const address = process.env.ADDRESS;
+const privateKey = process.env.PRIVATE_KEY;
+const polygonTestNetRpcURL =process.env.RPC_URL;
 
 const Web3 = require("web3");
 const web3 = new Web3(polygonTestNetRpcURL);
-
-const address = "0xf9E245E02aCafc6d282537d8245e7894aaB53848";
-const privateKey =
-  "efaeb760e0548561ce16275a28a7aab86a47608ac766d55390e5593c5f142e36";
 
 // Contract data
 const { InNFTCA, InNFTABI } = require("../data/getAbiData");
