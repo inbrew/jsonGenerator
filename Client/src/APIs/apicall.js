@@ -1,8 +1,6 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-// const data = require('../img/IMG_0307.JPG');
-
 // config
 const { localServerUrl } = require("../config");
 
