@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // MUI css
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 // import FileUpload from "react-mui-fileuploader";
 
 // recoil
@@ -13,62 +13,36 @@ import { tabSelectState } from "../recoil/tabSelect";
 import { postApiCall } from "../APIs/apicall";
 
 export default function UploadFile() {
-    const navigate = useNavigate();
-    const [filesToUpload, setFilesToUpload] = useState([]);
-    const setTabSelect = useSetRecoilState(tabSelectState);
+  const navigate = useNavigate();
+  const setTabSelect = useSetRecoilState(tabSelectState);
 
-    const handleFilesChange = (files) => {
-        setFilesToUpload([...files]);
-    }
+  const handleUploadFiles = async (e) => {
+    e.preventDefault();
 
-    const uploadFiles = async (e) => {
-        e.preventDefault()
-        let formData = new FormData();
-        filesToUpload.forEach(file => {
-            formData.append("file", file);
-        });
+    let files = [...e.target.file.files];
 
-        for (let i of formData.values()) {
-            console.log(i);
-        }
+    console.log(files);
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("file", file);
+    });
 
-        const result = await postApiCall("/upload",);
+    const result = await postApiCall("/file/upload", formData);
+    console.log(result);
 
-        // 서버로 보내서 url 받으면 NFT페이지로 넘기자.
-        setTabSelect({ tabSelect: 'NFT' });
-        navigate("/NFT");
-    }
+    // 서버로 보내서 url 받으면 NFT페이지로 넘기자.
+    setTabSelect({ tabSelect: "NFT" });
+    navigate("/NFT");
+  };
 
-    return (
-        <>
-            <Box>
-                {/* <FileUpload
-                    component="label"
-                    multiFile={true}
-                    onFilesChange={handleFilesChange}
-                    onContextReady={(context) => { }}
-                    allowedExtensions={['jpg', 'jpeg', 'png']}
-                /> */}
-                <Box sx={{ mt: "5%" }}>
-                    <Button
-                        onClick={uploadFiles}
-                        variant="contained"
-                        id="uploadButton"
-                    >
-                        UpLoad
-                    </Button>
-                </Box>
-            </Box>
-
-            <form
-                encType="multipart/form-data"
-                onSubmit={handleFilesChange}
-            >
-                <input type="file" name="img" multiple />
-                <input type="submit" />
-            </form>
-
-        </>
-
-    );
+  return (
+    <>
+      <Box sx={{ mt: "5%" }}>
+        <form encType="multipart/form-data" onSubmit={handleUploadFiles}>
+          <input type="file" name="file" multiple />
+          <button type="submit">이미지 업도르</button>
+        </form>
+      </Box>
+    </>
+  );
 }

@@ -6,22 +6,16 @@ axios.defaults.withCredentials = true;
 // config
 const { localServerUrl } = require("../config");
 
-
-
-
 // get api
 export async function postApiCall(endpoint, data) {
-    const result = await axios.post(`${localServerUrl}${endpoint}`, {
-        headers: {
-        },
-        file: data
+  const result = await axios
+    .post(`${localServerUrl}${endpoint}`, data)
+    .then((res) => {
+      return res;
     })
-        .then(res => {
-            console.log(res);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+    .catch((err) => {
+      console.log(err);
+    });
 
-    return result;
+  return result;
 }
