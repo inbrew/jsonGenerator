@@ -4,16 +4,22 @@ import React from "react";
 import { Button } from "@mui/material";
 
 // api
-import { getApiCall } from "../APIs/apicallAWS";
+// import { getApiCall } from "../APIs/apicall";
 
 export default function JsonButton() {
     const handleCreateButton = async () => {
-        await getApiCall();
+        // await getApiCall();
     }
 
     return (
         <>
-            <Button onClick={handleCreateButton} variant="contained">Create Json</Button>
+            <Button onClick={handleCreateButton} variant="contained">
+                Create Json
+                <input
+                    type="file"
+                    hidden
+                />
+            </Button>
         </>
     );
 }
