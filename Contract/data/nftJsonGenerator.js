@@ -69,12 +69,15 @@ const pinIMGToIPFS = async (reqData) => {
   //     fs.createReadStream(`${jsonBase}/${nftJsonFiles[0]}`)
   //   );
   //   let tokenUrl = [];
-
+  console.log(reqData.name)
   try {
     // console.log("여긴 들어와??");
+    const body = {
+      message: 'Pinatas are awesome'
+    };
     const stream = fs.createReadStream(`${jsonBase}/${nftJsonFiles[0]}`);
     const result = await pinata
-      .pinJSONToIPFS(stream, {
+      .pinJSONToIPFS(body, {
         pinataMetadata: { name: reqData.name },
       })
       .then((res) => {
