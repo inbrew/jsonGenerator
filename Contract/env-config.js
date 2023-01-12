@@ -8,4 +8,5 @@ module.exports = {
   address,
   privateKey,
   polygonTestNetRpcURL,
+  networkRPC
 };

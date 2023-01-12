@@ -17,32 +17,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-///////////////
-const path = require("path");
-const basePath = __dirname;
-let base = path.join(basePath, "/nftData");
-const multer = require('multer')
-
-const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, base)
-    },
-    filename: (req, file, callback) => {
-        callback(null, file.originalname)
-    }
-})
-
-const upload = multer({ storage: storage });
-app.post('/upload', upload.array('img'), (req, res) => {
-    console.log("파일업로드했습니다")
-    console.log(req.files);
-    res.end()
-})
-//////////////
-
 // route
 const file = require("./routes/file");
+const nft = require("./routes/nft");
+const address = require("./routes/address");
 app.use("/file", file);
+app.use("/nft", nft);
+app.use("/address", address);
 
 app.get("/", (req, res) => {
     res.send("This is Json Generator server!");
