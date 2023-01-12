@@ -7,7 +7,7 @@ const { localServerUrl } = require("../config");
 // get api
 export async function postApiCall(endpoint, data) {
     const result = await axios
-        .post(`${localServerUrl}${endpoint}`, { data: data })
+        .post(`${localServerUrl}${endpoint}`, data)
         .then((res) => {
             return res;
         })
@@ -26,6 +26,20 @@ export async function getApiCall(endpoint) {
             return res;
         })
         .catch((err) => {
+            console.log(err);
+        })
+
+    return result;
+}
+
+export async function postDataApiCall(endpoint, data) {
+    const result = await axios
+        .post(`${localServerUrl}${endpoint}`, { data: data })
+        .then(res => {
+            console.log(res);
+            return res;
+        })
+        .catch(err => {
             console.log(err);
         })
 

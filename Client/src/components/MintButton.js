@@ -4,12 +4,18 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 
 // component
-import { getApiCall } from "../APIs/apicall";
+import { postDataApiCall } from "../APIs/apicall";
+
+// recoil
+import { useRecoilValue } from "recoil";
+import { nftMetaState } from "../recoil/nftMeta";
 
 export default function MintButton() {
-    const handleMinting = () => {
-        console.log("잘 들어오니?");
-        getApiCall("/nft/mint");
+    const nftMetaData = useRecoilValue(nftMetaState);
+
+    const handleMinting = async () => {
+        console.log("잘 들어오니?", nftMetaData);
+        await postDataApiCall("/nft/mint", nftMetaData);
     }
 
     return (

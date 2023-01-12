@@ -6,12 +6,10 @@ const rpcUrl = process.env.RPC_URL;
 const Web3 = require("web3");
 const web3 = new Web3(rpcUrl);
 
-
-
 module.exports = {
     checkAddress: async (req, res) => {
-        const result = web3.utils.isAddress(req.body.data);
-
+        const result = await web3.utils.isAddress(req.body.data);
+        console.log(req.body)
         if (result) {
             res.status(200).send({
                 data: result,

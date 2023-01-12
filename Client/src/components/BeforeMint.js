@@ -8,14 +8,31 @@ import {
   CardContent,
   Button,
   Typography,
+  TextField
 } from "@mui/material";
 
 // recoil
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { fileNumState } from "../recoil/files";
+import { nftMetaState } from "../recoil/nftMeta";
 
 export default function BeforeMint() {
   const fileNum = useRecoilValue(fileNumState);
+  const nftMeta = useSetRecoilState(nftMetaState);
+
+  const handleName = (e) => {
+    nftMeta((prev) => ({
+      ...prev,
+      name: e.target.value
+    }));
+  }
+
+  const handleDescription = (e) => {
+    nftMeta((prev) => ({
+      ...prev,
+      description: e.target.value
+    }));
+  }
 
   const rendering = () => {
     const result = [];
@@ -25,20 +42,12 @@ export default function BeforeMint() {
         <Box key={i} sx={{ mb: "5%" }}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                파일 이름
-              </Typography>
               <Typography variant="h5" component="div">
-                이건 뭥미?
+                아래의 정보로 NFT가 민팅됩니다.
               </Typography>
+              <TextField autoFocus margin="dense" id="nameInput" label="name : NFT 이름을 쓰세요." variant="standard" fullWidth onChange={handleName} />
+              <TextField autoFocus margin="dense" id="descriptionInput" label="description : NFT에 관한 설명을 쓰세요." variant="standard" fullWidth onChange={handleDescription} />
             </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
           </Card>
         </Box>
       );

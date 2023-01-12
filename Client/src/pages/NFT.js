@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 
 // MUI css
 import { Box } from "@mui/material";
 
 // recoil
 import { useRecoilValue } from "recoil";
-import { fileNumState } from "../recoil/files";
+import { readyState } from "../recoil/nftReady";
 
 // component
 import BeforeMint from "../components/BeforeMint";
 import MintButton from "../components/MintButton";
 
 export default function NFT() {
-    const fileNum = useRecoilValue(fileNumState);
-    const [isReady, setIsReady] = useState(true);
+    const isReady = useRecoilValue(readyState);
 
     return (
         <Box sx={{ display: "flex", justifyContent: "center", mt: "3%" }}>
@@ -24,10 +23,10 @@ export default function NFT() {
                     justifyContent: "center",
                 }}
             >
-                {isReady ? (
+                {isReady.isReady ? (
                     <>
                         <Box sx={{ mb: "10%" }}>
-                            {fileNum.count}개의 파일이 민팅할 준비가 되었습니다!
+                            파일이 민팅할 준비가 되었습니다!
                         </Box>
                         <BeforeMint />
                         <Box sx={{ display: "flex", justifyContent: "center", mt: "10%" }}>
@@ -35,7 +34,13 @@ export default function NFT() {
                         </Box>
 
                     </>
-                ) : null}
+                ) : (
+                    <>
+                        <Box sx={{ mb: "10%" }}>
+                            아직 민팅할 준비가 되지 않았습니다!
+                        </Box>
+                    </>
+                )}
             </Box>
         </Box>
     );

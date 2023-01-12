@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const { mint } = require("../controllers/jsonControl");
+const { mint } = require("../controllers/mintControl");
 
-router.get("/mint", mint);
+router.post("/mint", mint);
 
 module.exports = router;
