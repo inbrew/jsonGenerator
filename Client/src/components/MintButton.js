@@ -9,6 +9,7 @@ import { postDataApiCall } from "../APIs/apicall";
 // recoil
 import { useRecoilValue } from "recoil";
 import { nftMetaState } from "../recoil/nftMeta";
+// import {}
 
 export default function MintButton() {
     const nftMetaData = useRecoilValue(nftMetaState);
