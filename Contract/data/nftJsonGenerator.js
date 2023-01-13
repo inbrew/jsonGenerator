@@ -2,7 +2,8 @@ const path = require("path");
 const fs = require("fs");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const base = path.resolve(__dirname, "../nftData");
-const nftDataFiles = fs.readdirSync(base);
+const nftDataFiles = fs.readdirSync(`${base}`);
+console.log("nftJsonGenerator 쪽 : ", nftDataFiles);
 
 // config
 const accessKey = process.env.ACCESS_KEY;
@@ -20,15 +21,12 @@ const axios = require("axios");
 
 const FormData = require("form-data");
 
-
-
 const pinIMGToIPFS = async (reqData) => {
-  console.log("넌 이름이 뭐야 : ", reqData.name)
+  console.log("넌 이름이 뭐야 : ", reqData.name);
   console.log("잘들어왔니 : ", nftDataFiles.length);
 
-
   if (nftDataFiles.length !== 0) {
-    let imgUrl = '';
+    let imgUrl = "";
 
     // file 여러개 올릴때는 주석 해제
     // for (let i = 0; i < nftDataFiles.length; i++) {
@@ -51,17 +49,16 @@ const pinIMGToIPFS = async (reqData) => {
 
     // 여기서부터 복사
     const metaDataJson = {
-      "name": `${reqData.name}`,
-      "description": `${reqData.description}`,
-      "image": `${imgUrl}`
+      name: `${reqData.name}`,
+      description: `${reqData.description}`,
+      image: `${imgUrl}`,
     };
-
 
     const metaDataUri = await pinata
       .pinJSONToIPFS(metaDataJson, {
         pinataMetadata: {
-          name: reqData.name
-        }
+          name: reqData.name,
+        },
       })
       .then((res) => {
         return res.IpfsHash;
@@ -70,13 +67,10 @@ const pinIMGToIPFS = async (reqData) => {
         console.log(err);
       });
 
-    const result = `ipfs://${metaDataUri}`
+    const result = `ipfs://${metaDataUri}`;
 
     return result;
   }
-
-
-
 };
 
 module.exports = {
