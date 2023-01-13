@@ -1,12 +1,10 @@
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const base = path.resolve(__dirname, "../nftData");
-const jsonBase = path.resolve(__dirname, "../nftJson");
 
 // config
 const accessKey = process.env.ACCESS_KEY;
 const secretAccessKey = process.env.SECRET_ACCESS_KEY;
-const jwt = process.env.JWT_KEY;
 
 // pinata
 const pinataSDK = require("@pinata/sdk");
@@ -21,7 +19,6 @@ const fs = require("fs");
 const FormData = require("form-data");
 
 const nftDataFiles = fs.readdirSync(base);
-const nftJsonFiles = fs.readdirSync(jsonBase);
 
 
 const pinIMGToIPFS = async (reqData) => {
