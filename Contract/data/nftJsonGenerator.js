@@ -1,6 +1,8 @@
 const path = require("path");
+const fs = require("fs");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const base = path.resolve(__dirname, "../nftData");
+const nftDataFiles = fs.readdirSync(base);
 
 // config
 const accessKey = process.env.ACCESS_KEY;
@@ -15,18 +17,23 @@ const pinata = new pinataSDK({
 const pinataUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS";
 
 const axios = require("axios");
-const fs = require("fs");
+
 const FormData = require("form-data");
 
-const nftDataFiles = fs.readdirSync(base);
 
 
 const pinIMGToIPFS = async (reqData) => {
-  let imgUrl = '';
+  console.log("넌 이름이 뭐야 : ", reqData.name)
+  console.log("잘들어왔니 : ", nftDataFiles.length);
 
-  for (let i = 0; i < nftDataFiles.length; i++) {
+
+  if (nftDataFiles.length !== 0) {
+    let imgUrl = '';
+
+    // file 여러개 올릴때는 주석 해제
+    // for (let i = 0; i < nftDataFiles.length; i++) {
     let data = new FormData();
-    data.append("file", fs.createReadStream(`${base}/${nftDataFiles[i]}`));
+    data.append("file", fs.createReadStream(`${base}/${nftDataFiles[0]}`));
 
     const res = await axios.post(pinataUrl, data, {
       maxContentLength: "Infinity",
@@ -36,38 +43,40 @@ const pinIMGToIPFS = async (reqData) => {
         pinata_secret_api_key: `${secretAccessKey}`,
       },
     });
+    // }
 
     imgUrl = `ipfs://${res.data.IpfsHash}`;
+
+    console.log("img : ", imgUrl);
+
+    // 여기서부터 복사
+    const metaDataJson = {
+      "name": `${reqData.name}`,
+      "description": `${reqData.description}`,
+      "image": `${imgUrl}`
+    };
+
+
+    const metaDataUri = await pinata
+      .pinJSONToIPFS(metaDataJson, {
+        pinataMetadata: {
+          name: reqData.name
+        }
+      })
+      .then((res) => {
+        return res.IpfsHash;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const result = `ipfs://${metaDataUri}`
+
+    return result;
   }
 
-  //   return imgUrl;
-
-  console.log("img : ", imgUrl);
-
-  // 여기서부터 복사
-  const metaDataJson = {
-    "name": `${reqData.name}`,
-    "description": `${reqData.description}`,
-    "image": `${imgUrl}`
-  };
 
 
-  const metaDataUri = await pinata
-    .pinJSONToIPFS(metaDataJson, {
-      pinataMetadata: {
-        name: reqData.name
-      }
-    })
-    .then((res) => {
-      return res.IpfsHash;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  const result = `ipfs://${metaDataUri}`
-
-  return result;
 };
 
 module.exports = {

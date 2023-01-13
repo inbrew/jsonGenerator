@@ -5,7 +5,6 @@ const nftDataFiles = fs.readdirSync(base);
 
 const { getNFTJson } = require("../data/nftJsonGenerator.js");
 const { minting } = require("../setContract/minting");
-console.log(nftDataFiles);
 
 module.exports = {
   mint: async (req, res) => {
