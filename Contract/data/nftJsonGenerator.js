@@ -56,9 +56,12 @@ const pinIMGToIPFS = async (reqData) => {
 
 
   const metaDataUri = await pinata
-    .pinJSONToIPFS(metaDataJson)
+    .pinJSONToIPFS(metaDataJson, {
+      pinataMetadata: {
+        name: reqData.name
+      }
+    })
     .then((res) => {
-      console.log(res.IpfsHash);
       return res.IpfsHash;
     })
     .catch((err) => {
@@ -75,7 +78,6 @@ module.exports = {
     const tokenUri = await pinIMGToIPFS(data);
 
     // 이제 이것을 민팅 시키면 됨.
-    console.log(tokenUri);
     return tokenUri;
   },
 };

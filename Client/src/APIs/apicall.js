@@ -32,9 +32,9 @@ export async function getApiCall(endpoint) {
     return result;
 }
 
-export async function postDataApiCall(endpoint, data) {
+export async function postDataApiCall(endpoint, data, address) {
     const result = await axios
-        .post(`${localServerUrl}${endpoint}`, { data: data })
+        .post(`${localServerUrl}${endpoint}`, { data: data, address })
         .then(res => {
             console.log(res);
             return res;

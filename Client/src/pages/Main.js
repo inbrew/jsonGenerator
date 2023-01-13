@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 
 // recoil
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilState } from "recoil";
 import { loadingState } from "../recoil/loading";
 import { tabSelectState } from "../recoil/tabSelect";
+import { addressState } from "../recoil/addressForMint";
 
 // api
 import { postDataApiCall } from "../APIs/apicall";
@@ -16,13 +17,13 @@ export default function Main() {
     const setLoading = useSetRecoilState(loadingState);
     const setTabSelect = useSetRecoilState(tabSelectState);
     const [isErr, setIsErr] = useState(false);
-    const [address, setAddress] = useState('');
+    const [address, setAddress] = useRecoilState(addressState);
     const navigate = useNavigate();
 
     const handleCheckAddress = async () => {
         setLoading({ isLoading: true });
 
-        const result = await postDataApiCall("/address/check", address);
+        const result = await postDataApiCall("/address/check", address.address);
 
         if (result.data.data) {
             // 데이터가 잘 들어옴
@@ -30,17 +31,23 @@ export default function Main() {
             setTabSelect({ tabSelect: 'Json' })
             navigate('/Json');
             setLoading({ isLoading: false });
+            console.log("address가 잘 들어왔습니다. address : ", address.address);
         } else {
             console.log(result)
             // 데이터가 잘 들어오지 않음.
+            setAddress({ address: '' });
             setIsErr(true);
             setLoading({ isLoading: false });
+            if (address.address === '') {
+                console.log("address를 확인해주세요. address : ", address.address);
+            }
+
         }
 
     }
 
     const handleInput = (inputAddress) => {
-        setAddress(inputAddress.target.value);
+        setAddress({ address: inputAddress.target.value });
     }
 
     return (

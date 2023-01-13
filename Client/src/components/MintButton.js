@@ -7,16 +7,26 @@ import { Box, Button } from "@mui/material";
 import { postDataApiCall } from "../APIs/apicall";
 
 // recoil
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { nftMetaState } from "../recoil/nftMeta";
-// import {}
+import { addressState } from "../recoil/addressForMint";
+import { loadingState } from "../recoil/loading";
 
 export default function MintButton() {
     const nftMetaData = useRecoilValue(nftMetaState);
+    const address = useRecoilValue(addressState);
+    const isLoading = useSetRecoilState(loadingState);
 
     const handleMinting = async () => {
-        console.log("잘 들어오니?", nftMetaData);
-        await postDataApiCall("/nft/mint", nftMetaData);
+        isLoading({ isLoading: true });
+
+        const result = await postDataApiCall("/nft/mint", nftMetaData, address.address);
+
+        if (result) {
+            isLoading({ isLoading: false });
+        } else {
+            isLoading({ isLoading: false });
+        }
     }
 
     return (

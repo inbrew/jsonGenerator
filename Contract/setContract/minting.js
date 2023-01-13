@@ -13,10 +13,11 @@ const web3 = new Web3(polygonTestNetRpcURL);
 const { InNFTCA, InNFTABI } = require("../data/getAbiData");
 const InNftContract = new web3.eth.Contract(InNFTABI, InNFTCA).methods;
 
-// nftJson
-const nftJson = "ipfs://QmbpvQutM4wZRBztWbwi3KC2XmsPSJWPn9mBHy4awCsZVU";
 
-const minting = async () => {
+
+const minting = async (tokenURI) => {
+  // nftJson
+  const nftJson = tokenURI;
   const mint = InNftContract.mintNFT(address, nftJson).encodeABI();
 
   const SendTransactionNoValue = async (data, to) => {
@@ -44,6 +45,10 @@ const minting = async () => {
   };
 
   await SendTransactionNoValue(mint, InNFTCA);
+
+  return "아주 잘되었구만!";
 };
 
-minting();
+module.exports = {
+  minting
+}
