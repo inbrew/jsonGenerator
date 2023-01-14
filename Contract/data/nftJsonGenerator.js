@@ -33,14 +33,20 @@ const pinIMGToIPFS = async (reqData) => {
     let data = new FormData();
     data.append("file", fs.createReadStream(`${base}/${nftDataFiles[0]}`));
 
-    const res = await axios.post(pinataUrl, data, {
-      maxContentLength: "Infinity",
-      headers: {
-        "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-        pinata_api_key: `${accessKey}`,
-        pinata_secret_api_key: `${secretAccessKey}`,
-      },
-    });
+    const res = await axios
+      .post(pinataUrl, data, {
+        maxContentLength: "Infinity",
+        headers: {
+          "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+          pinata_api_key: `${accessKey}`,
+          pinata_secret_api_key: `${secretAccessKey}`,
+        },
+      })
+      .catch(() => {
+        for (let i = 0; i < nftDataFiles.length; i++) {
+          fs.unlinkSync(`${base}/${nftDataFiles[i]}`);
+        }
+      });
     // }
 
     imgUrl = `ipfs://${res.data.IpfsHash}`;
@@ -65,6 +71,9 @@ const pinIMGToIPFS = async (reqData) => {
       })
       .catch((err) => {
         console.log(err);
+        for (let i = 0; i < nftDataFiles.length; i++) {
+          fs.unlinkSync(`${base}/${nftDataFiles[i]}`);
+        }
       });
 
     const result = `ipfs://${metaDataUri}`;

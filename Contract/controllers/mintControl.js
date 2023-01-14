@@ -32,9 +32,17 @@ module.exports = {
         }
       } else {
         res.send("민팅이 되지 않았습니다.");
+
+        for (let i = 0; i < nftDataFiles.length; i++) {
+          fs.unlinkSync(`${base}/${nftDataFiles[i]}`);
+        }
       }
     } else {
       res.send("민팅이 되지 않았습니다. 이건 서버 문제입니다.");
+
+      for (let i = 0; i < nftDataFiles.length; i++) {
+        fs.unlinkSync(`${base}/${nftDataFiles[i]}`);
+      }
     }
   },
 };
