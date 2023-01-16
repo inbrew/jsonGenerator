@@ -1,9 +1,8 @@
 const path = require("path");
-const fs = require("fs");
+
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
-const base = path.resolve(__dirname, "../nftData");
-const nftDataFiles = fs.readdirSync(`${base}`);
-console.log("nftJsonGenerator 쪽 : ", nftDataFiles);
+
+
 
 // config
 const accessKey = process.env.ACCESS_KEY;
@@ -22,6 +21,10 @@ const axios = require("axios");
 const FormData = require("form-data");
 
 const pinIMGToIPFS = async (reqData) => {
+  const fs = require("fs");
+  const base = path.resolve(__dirname, "../nftData");
+  const nftDataFiles = fs.readdirSync(`${base}`);
+  console.log("nftJsonGenerator 쪽 : ", nftDataFiles);
   console.log("넌 이름이 뭐야 : ", reqData.name);
   console.log("잘들어왔니 : ", nftDataFiles.length);
 
